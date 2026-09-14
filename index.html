@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sikonta | My Website</title>
+
+    <style>
+        /* =========================
+           BASIC RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+
+            /* MAIN WEBSITE BACKGROUND */
+            background-image: url("website background.avif");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+
+        /* =========================
+           DARK BACKGROUND OVERLAY
+        ========================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0.40);
+
+            z-index: -1;
+            pointer-events: none;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 75px;
+
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            padding: 0 30px;
+
+            z-index: 1000;
+        }
+
+
+        /* =========================
+           MENU BUTTON
+        ========================= */
+
+        .menu-button {
+            width: 52px;
+            height: 52px;
+
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+
+            background: rgba(0, 0, 0, 0.55);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            gap: 6px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .menu-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        .menu-button span {
+            width: 28px;
+            height: 3px;
+
+            background: white;
+
+            border-radius: 10px;
+
+            transition: 0.3s;
+        }
+
+
+        /* =========================
+           MENU BUTTON ANIMATION
+        ========================= */
+
+        .menu-button.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .menu-button.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-button.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+
+        /* =========================
+           MENU BOX
+        ========================= */
+
+        .menu {
+            position: absolute;
+
+            top: 70px;
+            right: 30px;
+
+            width: 230px;
+
+            padding: 10px;
+
+            background: rgba(0, 0, 0, 0.80);
+
+            border: 1px solid rgba(255, 255, 255, 0.20);
+            border-radius: 15px;
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+
+            transition: 0.3s;
+        }
+
+        .menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+
+        /* =========================
+           MENU LINKS
+        ========================= */
+
+        .menu a {
+            display: block;
+
+            width: 100%;
+
+            padding: 15px 16px;
+
+            margin-bottom: 4px;
+
+            color: white;
+            text-decoration: none;
+
+            font-size: 16px;
+            font-weight: 500;
+
+            border-radius: 10px;
+
+            transition: 0.25s;
+        }
+
+        .menu a:last-child {
+            margin-bottom: 0;
+        }
+
+        .menu a:hover {
+            background: rgba(255, 255, 255, 0.14);
+            padding-left: 22px;
+        }
+
+
+        /* =========================
+           HOME SECTION
+        ========================= */
+
+        #home {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            padding: 100px 25px 50px;
+        }
+
+
+        /* =========================
+           HOME CONTENT
+        ========================= */
+
+        .home-content {
+            width: 100%;
+            max-width: 850px;
+
+            padding: 55px 40px;
+
+            background: rgba(0, 0, 0, 0.32);
+
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 25px;
+
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.30);
+        }
+
+        .home-content h1 {
+            font-size: clamp(40px, 7vw, 70px);
+
+            margin-bottom: 20px;
+
+            letter-spacing: 2px;
+
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        .home-content p {
+            font-size: clamp(16px, 2vw, 20px);
+
+            line-height: 1.7;
+
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+
+        /* =========================
+           GENERAL SECTIONS
+        ========================= */
+
+        .section {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            padding: 100px 25px;
+        }
+
+
+        /* =========================
+           SECTION CONTENT BOX
+        ========================= */
+
+        .section-content {
+            width: 100%;
+            max-width: 850px;
+
+            padding: 50px 40px;
+
+            background: rgba(0, 0, 0, 0.38);
+
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 25px;
+
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.30);
+        }
+
+        .section-content h2 {
+            font-size: clamp(32px, 5vw, 50px);
+
+            margin-bottom: 25px;
+
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        .section-content p {
+            font-size: 18px;
+
+            line-height: 1.8;
+
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+
+        /* =========================
+           CREATOR NAME
+        ========================= */
+
+        .creator-name {
+            margin-top: 25px;
+
+            font-size: 25px;
+            font-weight: bold;
+
+            letter-spacing: 1px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            width: 100%;
+
+            padding: 25px;
+
+            text-align: center;
+
+            background: rgba(0, 0, 0, 0.45);
+
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+            font-size: 14px;
+
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+
+        /* =========================
+           MOBILE RESPONSIVE DESIGN
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            header {
+                height: 70px;
+                padding: 0 15px;
+            }
+
+            .menu-button {
+                width: 48px;
+                height: 48px;
+            }
+
+            .menu {
+                top: 65px;
+                right: 15px;
+                width: 210px;
+            }
+
+            #home {
+                padding: 90px 15px 40px;
+            }
+
+            .home-content {
+                padding: 40px 22px;
+                border-radius: 20px;
+            }
+
+            .section {
+                padding: 90px 15px 50px;
+            }
+
+            .section-content {
+                padding: 40px 22px;
+                border-radius: 20px;
+            }
+
+            .section-content p {
+                font-size: 16px;
+            }
+        }
+
+
+        /* =========================
+           SMALL PHONE
+        ========================= */
+
+        @media (max-width: 400px) {
+
+            .menu {
+                width: calc(100vw - 30px);
+            }
+
+            .home-content,
+            .section-content {
+                padding: 35px 18px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <header>
+
+        <!-- Triple-line menu button -->
+
+        <button
+            class="menu-button"
+            id="menuButton"
+            onclick="toggleMenu()"
+            aria-label="Open menu"
+            aria-expanded="false"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+
+        <!-- Menu -->
+
+        <nav class="menu" id="menu">
+
+            <a href="#home" onclick="closeMenu()">
+                Home
+            </a>
+
+            <a href="#about-website" onclick="closeMenu()">
+                About Website
+            </a>
+
+            <a href="#about-creator" onclick="closeMenu()">
+                About Creator
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =====================================
+         HOME
+    ====================================== -->
+
+    <main id="home">
+
+        <div class="home-content">
+
+            <h1>Welcome</h1>
+
+            <p>
+                Welcome to my website.
+                Explore the website using the menu in the top-right corner.
+            </p>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================
+         ABOUT WEBSITE
+    ====================================== -->
+
+    <section
+        class="section"
+        id="about-website"
+    >
+
+        <div class="section-content">
+
+            <h2>About Website</h2>
+
+            <p>
+                Welcome to my website. This website is designed
+                to provide a simple, modern and attractive place
+                to share information, projects and other content.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         ABOUT CREATOR
+    ====================================== -->
+
+    <section
+        class="section"
+        id="about-creator"
+    >
+
+        <div class="section-content">
+
+            <h2>About Creator</h2>
+
+            <p>
+                This website was created by
+                <strong>Kush Neupane</strong>.
+                More information about the creator,
+                projects and interests can be added here.
+            </p>
+
+            <div class="creator-name">
+                Kush Neupane
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer>
+
+        © 2026 Kush Neupane. All rights reserved.
+
+    </footer>
+
+
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
+    <script>
+
+        /* Get menu elements */
+
+        const menu = document.getElementById("menu");
+        const menuButton = document.getElementById("menuButton");
+
+
+        /* Open / close menu */
+
+        function toggleMenu() {
+
+            menu.classList.toggle("active");
+            menuButton.classList.toggle("active");
+
+            const isOpen = menu.classList.contains("active");
+
+            menuButton.setAttribute("aria-expanded", isOpen);
+
+        }
+
+
+        /* Close menu */
+
+        function closeMenu() {
+
+            menu.classList.remove("active");
+            menuButton.classList.remove("active");
+
+            menuButton.setAttribute("aria-expanded", "false");
+
+        }
+
+
+        /* Close menu when clicking outside */
+
+        document.addEventListener("click", function(event) {
+
+            if (
+                !menu.contains(event.target) &&
+                !menuButton.contains(event.target)
+            ) {
+
+                closeMenu();
+
+            }
+
+        });
+
+    </script>
+
+
+</body>
+</html>
